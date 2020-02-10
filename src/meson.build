@@ -1,5 +1,5 @@
-subdir('encoder')
 subdir('bitStream')
+subdir('encoder')
 
 # TODO: Define autocomplete_exe to output executable file named 
 #       autocomplete.cpp.executable
@@ -7,4 +7,14 @@ subdir('bitStream')
 bitconverter_exe = executable('bitconverter.cpp.executable', 
     sources: ['bitconverter.cpp'],
     dependencies : [bit_stream_dep],
+    install : true)
+
+compress_exe = executable('compress.cpp.executable', 
+    sources: ['compress.cpp'],
+    dependencies : [bit_stream_dep, encoder_dep],
+    install : true)
+
+uncompress_exe = executable('uncompress.cpp.executable', 
+    sources: ['uncompress.cpp'],
+    dependencies : [bit_stream_dep, encoder_dep],
     install : true)

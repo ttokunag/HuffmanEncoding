@@ -22,8 +22,10 @@ class HCTree {
     vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
 
   public:
-    /* TODO: add function header and implement */
-    HCTree() {}
+    /*
+     * Constructor of HCTree, which initialize a root to a null pointer
+     */
+    HCTree() { root = nullptr; }
 
     /* TODO: add function header */
     ~HCTree();

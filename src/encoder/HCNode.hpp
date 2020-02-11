@@ -49,12 +49,12 @@ struct HCNodePtrComp {
     bool operator()(HCNode*& lhs, HCNode*& rhs) const {
         // when a two nodes have different count, compare them by their counts
         if (lhs->count != rhs->count) {
-            return lhs->count < rhs->count;
+            return lhs->count > rhs->count;
         }
 
         // otherwise, compare them with their symbols
         //  (smaller one should have higher priority)
-        return lhs->symbol < rhs->symbol;
+        return lhs->symbol > rhs->symbol;
     }
 };
 #endif  // HCNODE_HPP

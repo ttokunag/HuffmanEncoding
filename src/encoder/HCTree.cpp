@@ -8,17 +8,22 @@
 /* TODO */
 HCTree::~HCTree() {}
 
-/* TODO */
+/*
+ * Builds a HCTree based on a given vector which represents frequency of ascii
+ * codes (a value at index i is frequecy of ascii code i)
+ *
+ * @param vector<unsigned int>: a vector which represents frequency
+ */
 void HCTree::build(const vector<unsigned int>& freqs) {
     // initializes a priority queue
     priority_queue<HCNode*, vector<HCNode*>, HCNodePtrComp> queue;
 
     for (int ascii = 0; ascii < freqs.size(); ascii++) {
-        unsigned int curr = freqs.at(ascii);
+        unsigned int freq = freqs.at(ascii);
         // when a current ascii character has more than one frequency, push it
         // to the priority queue
-        if (curr > 0) {
-            HCNode* node = new HCNode(curr, (byte)ascii);
+        if (freq > 0) {
+            HCNode* node = new HCNode(freq, (byte)ascii);
             queue.push(node);
         }
     }

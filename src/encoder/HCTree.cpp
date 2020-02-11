@@ -5,12 +5,19 @@
  */
 #include "HCTree.hpp"
 
-/* TODO */
+/*
+ * Destructor of a HCTree object
+ */
 HCTree::~HCTree() {
     deleteAll(root);
     delete root;
 }
 
+/*
+ * Free memory related to a given node
+ *
+ * @param HCNode*: a reference of a node to free memory
+ */
 void HCTree::deleteAll(HCNode* node) {
     deleteAll(node->c0);
     deleteAll(node->c1);

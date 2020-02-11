@@ -103,7 +103,9 @@ void HCTree::encode(byte symbol, ostream& out) const {
 /* TODO */
 byte HCTree::decode(BitInputStream& in) const { return ' '; }
 
-/* TODO */
+/*
+ * Decodes a given input stream.
+ */
 byte HCTree::decode(istream& in) const {
     // build() must be called before decoding
     if (root == nullptr) {

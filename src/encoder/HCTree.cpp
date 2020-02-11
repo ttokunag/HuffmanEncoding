@@ -6,7 +6,18 @@
 #include "HCTree.hpp"
 
 /* TODO */
-HCTree::~HCTree() {}
+HCTree::~HCTree() {
+    deleteAll(root);
+    delete root;
+}
+
+void HCTree::deleteAll(HCNode* node) {
+    deleteAll(node->c0);
+    deleteAll(node->c1);
+
+    delete node->c0;
+    delete node->c1;
+}
 
 /*
  * Builds a HCTree based on a given vector which represents frequency of ascii

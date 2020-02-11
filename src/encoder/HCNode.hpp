@@ -40,7 +40,12 @@ ostream& operator<<(ostream& stm, const HCNode& n) {
  * has higher prioruty.
  */
 struct HCNodePtrComp {
-    /* TODO */
+    /*
+     * Overloads the operator() which takes two HCNode references as paramters
+     * Returns true is the first HCNode contains smaller count OR two nodes
+     * contains the same count and a first node contains an alphabetically
+     * earlier symbol
+     */
     bool operator()(HCNode*& lhs, HCNode*& rhs) const {
         // when a two nodes have different count, compare them by their counts
         if (lhs->count != rhs->count) {

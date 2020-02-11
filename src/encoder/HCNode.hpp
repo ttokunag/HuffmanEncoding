@@ -1,7 +1,7 @@
 /**
- * TODO: file header
+ * This file implements HCNode class used in HCTree
  *
- * Author:
+ * Author: Tomoya Tokunaga
  */
 #ifndef HCNODE_HPP
 #define HCNODE_HPP
@@ -41,6 +41,15 @@ ostream& operator<<(ostream& stm, const HCNode& n) {
  */
 struct HCNodePtrComp {
     /* TODO */
-    bool operator()(HCNode*& lhs, HCNode*& rhs) const { return false; }
+    bool operator()(HCNode*& lhs, HCNode*& rhs) const {
+        // when a two nodes have different count, compare them by their counts
+        if (lhs->count != rhs->count) {
+            return lhs->count < rhs->count;
+        }
+
+        // otherwise, compare them with their symbols
+        //  (smaller one should have higher priority)
+        return lhs->symbol < rhs->symbol;
+    }
 };
 #endif  // HCNODE_HPP

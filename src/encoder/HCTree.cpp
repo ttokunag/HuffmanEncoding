@@ -40,16 +40,25 @@ void HCTree::build(const vector<unsigned int>& freqs) {
         queue.pop();
 
         // finds which node is more prioritized
-        HCNode* c0 = cmp(smaller, larger) ? larger : smaller;
-        HCNode* c1 = cmp(smaller, larger) ? smaller : larger;
+        HCNode* c0Node = cmp(smaller, larger) ? larger : smaller;
+        HCNode* c1Node = cmp(smaller, larger) ? smaller : larger;
 
         // initializes a new node based on above two nodes states
-        HCNode* parent = new HCNode(c0->count + c1->count, c0->symbol, c0, c1);
+        HCNode* parent = new HCNode(c0Node->count + c1Node->count,
+                                    c0Node->symbol, c0Node, c1Node);
         // sets parent-child relation
-        c0->p = parent;
-        c1->p = parent;
+        c0Node->p = parent;
+        c1Node->p = parent;
 
         queue.push(parent);
+
+        // leaf nodes should be added to leaves vector for efficiency
+        if (c0Node->c0 == nullptr && c0Node->c1 == nullptr) {
+            leaves.push_back(c0Node);
+        }
+        if (c1Node->c0 == nullptr && c1Node->c1 == nullptr) {
+            leaves.push_back(c1Node);
+        }
     }
 
     // sets a root node to a last node of a priority queue
@@ -57,7 +66,12 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 }
 
 /* TODO */
-void HCTree::encode(byte symbol, BitOutputStream& out) const {}
+void HCTree::encode(byte symbol, BitOutputStream& out) const {
+    // build() must be called before encoding
+    if (root == nullptr) {
+        return;
+    }
+}
 
 /* TODO */
 void HCTree::encode(byte symbol, ostream& out) const {}

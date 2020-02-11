@@ -36,12 +36,17 @@ using namespace testing;
 TEST(SimpleHCTreeTest, BUILD_TEST) {
     HCTree tree;
 
+    // int asciiCodes[] = {10, 20, 30, 40, 50, 60};
+    int asciiCodes[] = {'a', 'b', 'c', 'd', 'e', 'f'};
+    int frequencies[] = {32, 13, 32, 41, 55, 19};
+
+    int idx = 0;
+
     vector<unsigned int> freqs;
     for (int i = 0; i < 256; i++) {
-        if (i == 50) {
-            freqs.push_back(55);
-        } else if (i == 100) {
-            freqs.push_back(105);
+        if (idx < 6 && i == asciiCodes[idx]) {
+            freqs.push_back(frequencies[idx]);
+            idx++;
         } else {
             freqs.push_back(0);
         }

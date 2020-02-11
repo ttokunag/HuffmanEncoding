@@ -35,15 +35,14 @@ void HCTree::build(const vector<unsigned int>& freqs) {
         queue.pop();
 
         // finds which node is more prioritized
-        HCNode* high = cmp(smaller, larger) ? smaller : larger;
-        HCNode* low = cmp(smaller, larger) ? larger : smaller;
+        HCNode* c0 = cmp(smaller, larger) ? larger : smaller;
+        HCNode* c1 = cmp(smaller, larger) ? smaller : larger;
 
         // initializes a new node based on above two nodes states
-        HCNode* parent =
-            new HCNode(high->count + low->count, high->symbol, high, low);
+        HCNode* parent = new HCNode(c0->count + c1->count, c0->symbol, c0, c1);
         // sets parent-child relation
-        high->p = parent;
-        low->p = parent;
+        c0->p = parent;
+        c1->p = parent;
 
         queue.push(parent);
     }

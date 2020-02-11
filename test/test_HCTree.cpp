@@ -28,10 +28,10 @@ TEST_F(SimpleHCTreeFixture, TEST_ENCODE) {
     ASSERT_EQ(os.str(), "0");
 }
 
-// TEST_F(SimpleHCTreeFixture, TEST_DECODE) {
-//     istringstream is("1");
-//     ASSERT_EQ(tree.decode(is), 'b');
-// }
+TEST_F(SimpleHCTreeFixture, TEST_DECODE) {
+    istringstream is("1");
+    ASSERT_EQ(tree.decode(is), 'b');
+}
 
 TEST(SimpleHCTreeTest, BUILD_TEST) {
     HCTree tree;

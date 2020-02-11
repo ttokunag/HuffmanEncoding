@@ -18,7 +18,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
     // initializes a priority queue
     priority_queue<HCNode*, vector<HCNode*>, HCNodePtrComp> queue;
 
-    for (int ascii = 0; ascii < freqs.size(); ascii++) {
+    for (unsigned int ascii = 0; ascii < freqs.size(); ascii++) {
         unsigned int freq = freqs.at(ascii);
         // when a current ascii character has more than one frequency, push it
         // to the priority queue
@@ -75,7 +75,6 @@ void HCTree::encode(byte symbol, ostream& out) const {
         return;
     }
 
-    // char* code;    // encoded letters of a given symbol
     vector<char> code;
     HCNode* node;  // a leaf node with a given symbol
 
@@ -105,4 +104,25 @@ void HCTree::encode(byte symbol, ostream& out) const {
 byte HCTree::decode(BitInputStream& in) const { return ' '; }
 
 /* TODO */
-byte HCTree::decode(istream& in) const { return ' '; }
+byte HCTree::decode(istream& in) const {
+    // build() must be called before decoding
+    if (root == nullptr) {
+        return ' ';
+    }
+
+    unsigned char nextChar;
+    int nextByte;
+    HCNode* node = root;
+
+    // read input stream until hitting the end
+    while ((nextByte = in.get()) != EOF) {
+        nextChar = (unsigned char)nextByte;
+
+        node = nextChar == '0' ? node->c0 : node->c1;
+        if (node == nullptr) {
+            return ' ';
+        }
+    }
+
+    return node->symbol;
+}

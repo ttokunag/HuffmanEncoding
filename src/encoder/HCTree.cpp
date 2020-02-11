@@ -66,15 +66,40 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 }
 
 /* TODO */
-void HCTree::encode(byte symbol, BitOutputStream& out) const {
-    // build() must be called before encoding
+void HCTree::encode(byte symbol, BitOutputStream& out) const {}
+
+/* TODO */
+void HCTree::encode(byte symbol, ostream& out) const {
+    // build() must be called before encoding a byte
     if (root == nullptr) {
         return;
     }
-}
 
-/* TODO */
-void HCTree::encode(byte symbol, ostream& out) const {}
+    // char* code;    // encoded letters of a given symbol
+    vector<char> code;
+    HCNode* node;  // a leaf node with a given symbol
+
+    // finds a node which contains a given symbol
+    for (HCNode* leaf : leaves) {
+        if (leaf->symbol == symbol) {
+            node = leaf;
+            break;
+        }
+    }
+
+    // add codes to a vector
+    while (node->p != nullptr) {
+        if (node->p->c0 == node) {
+            code.insert(code.begin(), '0');
+        } else {
+            code.insert(code.begin(), '1');
+        }
+        node = node->p;
+    }
+
+    // writes bits to a given ostream
+    out.write(&code[0], (streamsize)code.size());
+}
 
 /* TODO */
 byte HCTree::decode(BitInputStream& in) const { return ' '; }

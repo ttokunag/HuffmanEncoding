@@ -62,6 +62,13 @@ int main(int argc, char* argv[]) {
         freqs[(unsigned int)nextByte] += 1;
     }
 
+    std::ofstream outputFile(argv[3]);
+    for (unsigned int i = 0; i < freqs.size(); i++) {
+        outputFile << freqs[i];
+        outputFile << '\n';
+    }
+    outputFile.flush();
+
     // // test if a vector properly contains desired elements
     // for (int i = 0; i < freqs.size(); i++) {
     //     std::cout << (char)i << ": " << freqs[i] << std::endl;

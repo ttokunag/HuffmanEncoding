@@ -72,6 +72,7 @@ int main(int argc, char* argv[]) {
             asciiIdx++;
         }
     }
+    is.get();
 
     // puts frequencies and the encoded to an output file
     std::ofstream outputFile(argv[3]);
@@ -80,13 +81,11 @@ int main(int argc, char* argv[]) {
     HCTree* tree = new HCTree();
     tree->build(freqs);
 
-    std::ifstream _is(argv[2]);
-    char* nextChar;
-    // int nextByte;
-    while (!_is.eof()) {
-        nextChar = new char[1];
-        byte next = tree->decode(_is);
-        outputFile << next;
+    while (!is.eof()) {
+        byte next = tree->decode(is);
+        if (next != NULL) {
+            outputFile << next;
+        }
     }
     outputFile.flush();
 

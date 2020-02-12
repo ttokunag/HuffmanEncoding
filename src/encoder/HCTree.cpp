@@ -131,7 +131,7 @@ byte HCTree::decode(BitInputStream& in) const { return ' '; }
 byte HCTree::decode(istream& in) const {
     // build() must be called before decoding
     if (root == nullptr) {
-        return ' ';
+        return NULL;
     }
 
     unsigned char nextChar;
@@ -142,12 +142,21 @@ byte HCTree::decode(istream& in) const {
     while ((nextByte = in.get()) != EOF) {
         nextChar = (unsigned char)nextByte;
 
-        node = (nextChar == '0') ? node->c0 : node->c1;
-        // when there's no such symbol in a HCTree
-        if (node == nullptr) {
-            return ' ';
+        if (nextChar == '0') {
+            node = node->c0;
+        } else {
+            node = node->c1;
         }
+
+        if (node->c0 == nullptr && node->c1 == nullptr) {
+            return node->symbol;
+        }
+
+        // // when there's no such symbol in a HCTree
+        // if (node == nullptr) {
+        //     return ' ';
+        // }
     }
 
-    return node->symbol;
+    return NULL;
 }

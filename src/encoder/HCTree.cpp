@@ -19,6 +19,10 @@ HCTree::~HCTree() {
  * @param HCNode*: a reference of a node to free memory
  */
 void HCTree::deleteAll(HCNode* node) {
+    if (node == nullptr) {
+        return;
+    }
+
     deleteAll(node->c0);
     deleteAll(node->c1);
 

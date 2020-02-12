@@ -1,7 +1,7 @@
 /**
- * TODO: file header
+ * Application which compresses an input file using the Huffman coding tree
  *
- * Author:
+ * Author: Tomoya Tokunaga
  */
 #include <fstream>
 #include <iostream>

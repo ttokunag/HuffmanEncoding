@@ -7,6 +7,7 @@
 #define HCTREE_HPP
 
 #include <fstream>
+#include <map>
 #include <queue>
 #include <vector>
 #include "BitInputStream.hpp"
@@ -20,6 +21,7 @@ class HCTree {
   private:
     HCNode* root;            // the root of HCTree
     vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
+    map<byte, char*> binaryRep;
 
     void deleteAll(HCNode* node);
 

@@ -54,7 +54,7 @@ struct HCNodePtrComp {
 
         // otherwise, compare them with their symbols
         //  (smaller one should have higher priority)
-        return lhs->symbol > rhs->symbol;
+        return lhs->symbol < rhs->symbol;
     }
 };
 #endif  // HCNODE_HPP

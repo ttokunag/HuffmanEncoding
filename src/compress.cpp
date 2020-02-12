@@ -43,6 +43,7 @@ int main(int argc, char* argv[]) {
 
     // const int NUM_ARG = 4;
     FileUtils fu;
+    const int ASCII_SIZE = 256;
     // // checks if all the necessary informations is given
     // if (sizeof(argv) / sizeof(argv[0]) != NUM_ARG) {
     //     std::cout << "Invalid number of arguments" << std::endl;
@@ -52,8 +53,8 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    // initializes a frequency vector
-    vector<unsigned int> freqs(256, 0);
+    // initializes a frequency array
+    vector<unsigned int> freqs(ASCII_SIZE, 0);
 
     // counts frequecy of each character in a given file
     std::ifstream is(argv[2]);
@@ -62,17 +63,24 @@ int main(int argc, char* argv[]) {
         freqs[(unsigned int)nextByte] += 1;
     }
 
+    // puts frequencies and the encoded to an output file
     std::ofstream outputFile(argv[3]);
-    for (unsigned int i = 0; i < freqs.size(); i++) {
+    for (unsigned int i = 0; i < ASCII_SIZE; i++) {
         outputFile << freqs[i];
         outputFile << '\n';
     }
     outputFile.flush();
 
-    // // test if a vector properly contains desired elements
-    // for (int i = 0; i < freqs.size(); i++) {
-    //     std::cout << (char)i << ": " << freqs[i] << std::endl;
-    // }
+    // build a HCTree
+    HCTree* tree = new HCTree();
+    tree->build(freqs);
+
+    std::ifstream _is(argv[2]);
+    // int nextByte;
+    while ((nextByte = _is.get()) != EOF) {
+        tree->encode((byte)nextByte, outputFile);
+    }
+    outputFile.flush();
 
     return 0;
 }

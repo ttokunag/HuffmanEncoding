@@ -86,8 +86,7 @@ void HCTree::build(const vector<unsigned int>& freqs) {
     // sets a root node to a last node of a priority queue
     root = queue.top();
 
-    vector<char>* code = new vector<char>();
-    // buildCodeMap(root, code);
+    buildCodeMap(root, "");
 }
 
 /* TODO */
@@ -95,63 +94,24 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {}
 
 /* TODO */
 void HCTree::encode(byte symbol, ostream& out) const {
-    // build() must be called before encoding a byte
+    string code = codes.at(symbol);
+    out.write(code.c_str(), (streamsize)code.size());
+}
+
+void HCTree::buildCodeMap(HCNode* root, string code) {
+    // base case when visiting an empty node
     if (root == nullptr) {
         return;
     }
-
-    vector<char> code;
-    HCNode* node;  // a leaf node with a given symbol
-
-    // finds a node which contains a given symbol
-    for (HCNode* leaf : leaves) {
-        if (leaf->symbol == symbol) {
-            node = leaf;
-            break;
-        }
+    // when visiting a leaf node
+    if (root->c0 == nullptr && root->c1 == nullptr) {
+        string copy = code;
+        codes.at(root->symbol) = copy;
     }
 
-    // add codes to a vector
-    while (node->p != nullptr) {
-        if (node->p->c0 == node) {
-            code.insert(code.begin(), '0');
-        } else {
-            code.insert(code.begin(), '1');
-        }
-        node = node->p;
-    }
-
-    // writes bits to a given ostream
-    out.write(&code[0], (streamsize)code.size());
+    buildCodeMap(root->c0, code + "0");
+    buildCodeMap(root->c1, code + "1");
 }
-
-// void HCTree::buildCodeMap(HCNode* root, vector<char>* code) {
-//     // base case when visiting an empty node
-//     if (root == nullptr) {
-//         return;
-//     }
-//     // when visiting a leaf node
-//     if (root->c0 == nullptr && root->c1 == nullptr) {
-//         // vector<char>* copy = new vector<char>();
-//         // for (char c : *code) copy->push_back(c);
-//         string codeCopy = "";
-//         for (char c : *code) {
-//             string s(1, c);
-//             codeCopy.append(s);
-//         }
-
-//         codes.insert(pair<byte, const char*>(root->symbol,
-//         codeCopy.c_str()));
-//     }
-
-//     code->push_back('0');
-//     buildCodeMap(root->c0, code);
-//     code->pop_back();
-
-//     code->push_back('1');
-//     buildCodeMap(root->c1, code);
-//     code->pop_back();
-// }
 
 /* TODO */
 byte HCTree::decode(BitInputStream& in) const { return ' '; }

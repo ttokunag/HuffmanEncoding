@@ -6,10 +6,10 @@
 #ifndef HCTREE_HPP
 #define HCTREE_HPP
 
+#include <string.h>
 #include <fstream>
 #include <map>
 #include <queue>
-#include <string>
 #include <vector>
 #include "BitInputStream.hpp"
 #include "BitOutputStream.hpp"
@@ -22,17 +22,22 @@ class HCTree {
   private:
     HCNode* root;            // the root of HCTree
     vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
-    map<byte, const char*> codes;
+    vector<string> codes;
 
     void deleteAll(HCNode* node);
 
-    void buildCodeMap(HCNode* node, vector<char>* code);
+    void buildCodeMap(HCNode* node, string code);
 
   public:
     /*
      * Constructor of HCTree, which initialize a root to a null pointer
      */
-    HCTree() { root = nullptr; }
+    HCTree() {
+        root = nullptr;
+        for (int i = 0; i < 256; i++) {
+            codes.push_back("");
+        }
+    }
 
     /* TODO: add function header */
     ~HCTree();

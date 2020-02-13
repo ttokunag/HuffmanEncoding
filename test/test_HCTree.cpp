@@ -63,7 +63,7 @@ TEST(SimpleHCTreeTest, ENCODER_TEST) {
     vector<unsigned int> freqs(ASCII_SIZE, 0);
 
     // counts frequecy of each character in a given file
-    std::ifstream is("data/check.txt");
+    std::ifstream is("data/file_2.txt");
     int nextByte;
     while ((nextByte = is.get()) != EOF) {
         freqs[(unsigned int)nextByte] += 1;
@@ -81,7 +81,7 @@ TEST(SimpleHCTreeTest, ENCODER_TEST) {
     HCTree* tree = new HCTree();
     tree->build(freqs);
 
-    std::ifstream _is("data/check.txt");
+    std::ifstream _is("data/file_2.txt");
     // int nextByte;
     while ((nextByte = _is.get()) != EOF) {
         tree->encode((byte)nextByte, outFile);

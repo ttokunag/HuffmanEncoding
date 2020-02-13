@@ -22,7 +22,8 @@ class HCTree {
   private:
     HCNode* root;            // the root of HCTree
     vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
-    vector<string> codes;
+    // vector<string> codes;
+    string codes[256];
 
     void deleteAll(HCNode* node);
 
@@ -32,12 +33,7 @@ class HCTree {
     /*
      * Constructor of HCTree, which initialize a root to a null pointer
      */
-    HCTree() {
-        root = nullptr;
-        for (int i = 0; i < 256; i++) {
-            codes.push_back("");
-        }
-    }
+    HCTree() { root = nullptr; }
 
     /* TODO: add function header */
     ~HCTree();

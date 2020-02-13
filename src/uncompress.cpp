@@ -58,28 +58,25 @@ int main(int argc, char* argv[]) {
 
     // counts frequecy of each character in a given file
     std::ifstream is(argv[2]);
-    int nextByte;
+    char nextline[ASCII_SIZE];
     int asciiIdx = 0;
-    while (asciiIdx < ASCII_SIZE && (nextByte = is.get()) != EOF) {
-        // we ignore new line symbol
-        if (nextByte == '\n') {
-            continue;
-        } else {
-            unsigned int freq = nextByte - '0';
-            if (freq > 0) {
-                freqs[asciiIdx] = freq;
-            }
-            asciiIdx++;
+    // better to read a line instead of read a char
+    while (asciiIdx < ASCII_SIZE && !is.eof()) {
+        is.getline(nextline, ASCII_SIZE);
+        // unsigned int freq = nextByte - '0';
+        unsigned int freq = atoi(nextline);
+        if (freq > 0) {
+            freqs[asciiIdx] = freq;
         }
+        asciiIdx++;
     }
-    is.get();
-
-    // puts frequencies and the encoded to an output file
-    std::ofstream outputFile(argv[3]);
 
     // build a HCTree
     HCTree* tree = new HCTree();
     tree->build(freqs);
+
+    // puts frequencies and the encoded to an output file
+    std::ofstream outputFile(argv[3]);
 
     while (!is.eof()) {
         byte next = tree->decode(is);

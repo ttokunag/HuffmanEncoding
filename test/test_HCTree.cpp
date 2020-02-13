@@ -53,41 +53,43 @@ TEST(SimpleHCTreeTest, BUILD_TEST) {
     }
 
     tree.build(freqs);
+
+    cout << "DONE" << endl;
 }
 
-TEST(SimpleHCTreeTest, DECODER_TEST) {
-    const int ASCII_SIZE = 256;
+// TEST(SimpleHCTreeTest, DECODER_TEST) {
+//     const int ASCII_SIZE = 256;
 
-    // initializes a frequency array
-    vector<unsigned int> freqs(ASCII_SIZE, 0);
+//     // initializes a frequency array
+//     vector<unsigned int> freqs(ASCII_SIZE, 0);
 
-    // counts frequecy of each character in a given file
-    std::ifstream is("compressed.txt");
-    char nextline[ASCII_SIZE];
-    int asciiIdx = 0;
-    // better to read a line instead of read a char
-    while (asciiIdx < ASCII_SIZE && !is.eof()) {
-        is.getline(nextline, ASCII_SIZE);
-        // unsigned int freq = nextByte - '0';
-        unsigned int freq = atoi(nextline);
-        if (freq > 0) {
-            freqs[asciiIdx] = freq;
-        }
-        asciiIdx++;
-    }
+//     // counts frequecy of each character in a given file
+//     std::ifstream is("compressed.txt");
+//     char nextline[ASCII_SIZE];
+//     int asciiIdx = 0;
+//     // better to read a line instead of read a char
+//     while (asciiIdx < ASCII_SIZE && !is.eof()) {
+//         is.getline(nextline, ASCII_SIZE);
+//         // unsigned int freq = nextByte - '0';
+//         unsigned int freq = atoi(nextline);
+//         if (freq > 0) {
+//             freqs[asciiIdx] = freq;
+//         }
+//         asciiIdx++;
+//     }
 
-    // build a HCTree
-    HCTree* tree = new HCTree();
-    tree->build(freqs);
+//     // build a HCTree
+//     HCTree* tree = new HCTree();
+//     tree->build(freqs);
 
-    // puts frequencies and the encoded to an output file
-    std::ofstream outputFile("uncompressed.txt");
+//     // puts frequencies and the encoded to an output file
+//     std::ofstream outputFile("uncompressed.txt");
 
-    while (!is.eof()) {
-        byte next = tree->decode(is);
-        if (next != NULL) {
-            outputFile << next;
-        }
-    }
-    outputFile.flush();
-}
+//     while (!is.eof()) {
+//         byte next = tree->decode(is);
+//         if (next != NULL) {
+//             outputFile << next;
+//         }
+//     }
+//     outputFile.flush();
+// }

@@ -11,9 +11,44 @@
 #include "HCNode.hpp"
 #include "HCTree.hpp"
 
+const int ASCII_SIZE = 256;
+
 /* TODO: Pseudo decompression with ascii encoding and naive header (checkpoint)
  */
-void pseudoDecompression(string inFileName, string outFileName) {}
+void pseudoDecompression(string inFileName, string outFileName) {
+    // initializes a frequency array
+    vector<unsigned int> freqs(ASCII_SIZE, 0);
+
+    // counts frequecy of each character in a given file
+    std::ifstream is(inFileName);
+    char nextline[ASCII_SIZE];
+    int asciiIdx = 0;
+    // better to read a line instead of read a char
+    while (asciiIdx < ASCII_SIZE && !is.eof()) {
+        is.getline(nextline, ASCII_SIZE);
+        // unsigned int freq = nextByte - '0';
+        unsigned int freq = atoi(nextline);
+        if (freq > 0) {
+            freqs[asciiIdx] = freq;
+        }
+        asciiIdx++;
+    }
+
+    // build a HCTree
+    HCTree* tree = new HCTree();
+    tree->build(freqs);
+
+    // puts frequencies and the encoded to an output file
+    std::ofstream outputFile(outFileName);
+
+    while (!is.eof()) {
+        byte next = tree->decode(is);
+        if (next != NULL) {
+            outputFile << next;
+        }
+    }
+    outputFile.flush();
+}
 
 /* TODO: True decompression with bitwise i/o and small header (final) */
 void trueDecompression(string inFileName, string outFileName) {}
@@ -41,50 +76,14 @@ int main(int argc, char* argv[]) {
         cout << options.help({""}) << std::endl;
     }
 
-    // const int NUM_ARG = 4;
     FileUtils fu;
-    const int ASCII_SIZE = 256;
-    // // checks if all the necessary informations is given
-    // if (sizeof(argv) / sizeof(argv[0]) != NUM_ARG) {
-    //     std::cout << "Invalid number of arguments" << std::endl;
-    // }
+
     // checks if a given file name is valid
     if (!fu.isValidFile(argv[2]) && !fu.isEmptyFile(argv[2])) {
         return -1;
     }
 
-    // initializes a frequency array
-    vector<unsigned int> freqs(ASCII_SIZE, 0);
-
-    // counts frequecy of each character in a given file
-    std::ifstream is(argv[2]);
-    char nextline[ASCII_SIZE];
-    int asciiIdx = 0;
-    // better to read a line instead of read a char
-    while (asciiIdx < ASCII_SIZE && !is.eof()) {
-        is.getline(nextline, ASCII_SIZE);
-        // unsigned int freq = nextByte - '0';
-        unsigned int freq = atoi(nextline);
-        if (freq > 0) {
-            freqs[asciiIdx] = freq;
-        }
-        asciiIdx++;
-    }
-
-    // build a HCTree
-    HCTree* tree = new HCTree();
-    tree->build(freqs);
-
-    // puts frequencies and the encoded to an output file
-    std::ofstream outputFile(argv[3]);
-
-    while (!is.eof()) {
-        byte next = tree->decode(is);
-        if (next != NULL) {
-            outputFile << next;
-        }
-    }
-    outputFile.flush();
+    pseudoDecompression(argv[2], argv[3]);
 
     return 0;
 }

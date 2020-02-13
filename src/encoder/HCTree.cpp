@@ -85,6 +85,9 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 
     // sets a root node to a last node of a priority queue
     root = queue.top();
+
+    vector<char>* code = new vector<char>();
+    // buildCodeMap(root, code);
 }
 
 /* TODO */
@@ -121,6 +124,34 @@ void HCTree::encode(byte symbol, ostream& out) const {
     // writes bits to a given ostream
     out.write(&code[0], (streamsize)code.size());
 }
+
+// void HCTree::buildCodeMap(HCNode* root, vector<char>* code) {
+//     // base case when visiting an empty node
+//     if (root == nullptr) {
+//         return;
+//     }
+//     // when visiting a leaf node
+//     if (root->c0 == nullptr && root->c1 == nullptr) {
+//         // vector<char>* copy = new vector<char>();
+//         // for (char c : *code) copy->push_back(c);
+//         string codeCopy = "";
+//         for (char c : *code) {
+//             string s(1, c);
+//             codeCopy.append(s);
+//         }
+
+//         codes.insert(pair<byte, const char*>(root->symbol,
+//         codeCopy.c_str()));
+//     }
+
+//     code->push_back('0');
+//     buildCodeMap(root->c0, code);
+//     code->pop_back();
+
+//     code->push_back('1');
+//     buildCodeMap(root->c1, code);
+//     code->pop_back();
+// }
 
 /* TODO */
 byte HCTree::decode(BitInputStream& in) const { return ' '; }

@@ -11,9 +11,40 @@
 #include "HCNode.hpp"
 #include "HCTree.hpp"
 
+const int ASCII_SIZE = 256;
+
 /* TODO: add pseudo compression with ascii encoding and naive header
  * (checkpoint) */
-void pseudoCompression(string inFileName, string outFileName) {}
+void pseudoCompression(string inFileName, string outFileName) {
+    // initializes a frequency array
+    vector<unsigned int> freqs(ASCII_SIZE, 0);
+
+    // counts frequecy of each character in a given file
+    std::ifstream is(inFileName);
+    int nextByte;
+    while ((nextByte = is.get()) != EOF) {
+        freqs[(unsigned int)nextByte] += 1;
+    }
+
+    // puts frequencies and the encoded to an output file
+    std::ofstream outFile(outFileName);
+    for (unsigned int i = 0; i < ASCII_SIZE; i++) {
+        outFile << freqs[i];
+        outFile << '\n';
+    }
+    outFile.flush();
+
+    // build a HCTree
+    HCTree* tree = new HCTree();
+    tree->build(freqs);
+
+    std::ifstream _is(inFileName);
+    // int nextByte;
+    while ((nextByte = _is.get()) != EOF) {
+        tree->encode((byte)nextByte, outFile);
+    }
+    outFile.flush();
+}
 
 /* TODO: True compression with bitwise i/o and small header (final) */
 void trueCompression(string inFileName, string outFileName) {}
@@ -43,7 +74,6 @@ int main(int argc, char* argv[]) {
 
     // const int NUM_ARG = 4;
     FileUtils fu;
-    const int ASCII_SIZE = 256;
     // // checks if all the necessary informations is given
     // if (sizeof(argv) / sizeof(argv[0]) != NUM_ARG) {
     //     std::cout << "Invalid number of arguments" << std::endl;
@@ -53,34 +83,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    // initializes a frequency array
-    vector<unsigned int> freqs(ASCII_SIZE, 0);
-
-    // counts frequecy of each character in a given file
-    std::ifstream is(argv[2]);
-    int nextByte;
-    while ((nextByte = is.get()) != EOF) {
-        freqs[(unsigned int)nextByte] += 1;
-    }
-
-    // puts frequencies and the encoded to an output file
-    std::ofstream outputFile(argv[3]);
-    for (unsigned int i = 0; i < ASCII_SIZE; i++) {
-        outputFile << freqs[i];
-        outputFile << '\n';
-    }
-    outputFile.flush();
-
-    // build a HCTree
-    HCTree* tree = new HCTree();
-    tree->build(freqs);
-
-    std::ifstream _is(argv[2]);
-    // int nextByte;
-    while ((nextByte = _is.get()) != EOF) {
-        tree->encode((byte)nextByte, outputFile);
-    }
-    outputFile.flush();
+    pseudoCompression(argv[2], argv[3]);
 
     return 0;
 }

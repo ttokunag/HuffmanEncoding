@@ -22,8 +22,8 @@ class HCTree {
   private:
     HCNode* root;            // the root of HCTree
     vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
-    // vector<string> codes;
     string codes[256];
+    // map<byte, string> mapCode;
 
     void deleteAll(HCNode* node);
 

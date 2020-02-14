@@ -72,12 +72,8 @@ int main(int argc, char* argv[]) {
         cout << options.help({""}) << std::endl;
     }
 
-    // const int NUM_ARG = 4;
     FileUtils fu;
-    // // checks if all the necessary informations is given
-    // if (sizeof(argv) / sizeof(argv[0]) != NUM_ARG) {
-    //     std::cout << "Invalid number of arguments" << std::endl;
-    // }
+
     // checks if a given file name is valid
     if (!fu.isValidFile(argv[2]) && !fu.isEmptyFile(argv[2])) {
         return -1;

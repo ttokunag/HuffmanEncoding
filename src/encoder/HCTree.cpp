@@ -113,6 +113,7 @@ void HCTree::buildCodeMap(HCNode* root, string code) {
     if (root->c0 == nullptr && root->c1 == nullptr) {
         string copy = (code.size() == 0) ? "0" : code;
         codes[root->symbol] = copy;
+        // mapCode.insert(pair<byte, string>(root->symbol, copy));
     }
 
     buildCodeMap(root->c0, code + "0");
@@ -126,13 +127,20 @@ byte HCTree::decode(BitInputStream& in) const { return ' '; }
  * Decodes a given input stream.
  */
 byte HCTree::decode(istream& in) const {
+    int nextByte;
+
     // build() must be called before decoding
     if (root == nullptr) {
         return NULL;
+    } else if (root->c0 == nullptr && root->c1 == nullptr) {
+        if ((nextByte = in.get()) != EOF) {
+            return root->symbol;
+        } else {
+            return NULL;
+        }
     }
 
     unsigned char nextChar;
-    int nextByte;
     HCNode* node = root;
 
     // read input stream until hitting the end

@@ -53,50 +53,54 @@ TEST(SimpleHCTreeTest, BUILD_TEST) {
     }
 
     tree.build(freqs);
-
-    cout << "DONE" << endl;
 }
 
-TEST(SimpleHCTreeTest, ENCODER_TEST) {
-    const int ASCII_SIZE = 256;
-    // initializes a frequency array
-    vector<unsigned int> freqs(ASCII_SIZE, 0);
+// TEST(SimpleHCTreeTest, ENCODER_TEST) {
+//     const int ASCII_SIZE = 256;
+//     // initializes a frequency array
+//     vector<unsigned int> freqs(ASCII_SIZE, 0);
 
-    // counts frequecy of each character in a given file
-    std::ifstream is("data/file_2.txt");
-    int nextByte;
-    while ((nextByte = is.get()) != EOF) {
-        freqs[(unsigned int)nextByte] += 1;
-    }
+//     string inFileName = "data/check.txt";
+//     string outFileName = "compressed.txt";
 
-    // puts frequencies and the encoded to an output file
-    std::ofstream outFile("compressed.txt");
-    for (unsigned int i = 0; i < ASCII_SIZE; i++) {
-        outFile << freqs[i];
-        outFile << '\n';
-    }
-    outFile.flush();
+//     // counts frequecy of each character in a given file
+//     std::ifstream is(inFileName);
+//     int nextByte;
+//     while ((nextByte = is.get()) != EOF) {
+//         freqs[(unsigned int)nextByte] += 1;
+//     }
 
-    // build a HCTree
-    HCTree* tree = new HCTree();
-    tree->build(freqs);
+//     // puts frequencies and the encoded to an output file
+//     std::ofstream outFile(outFileName);
+//     for (unsigned int i = 0; i < ASCII_SIZE; i++) {
+//         outFile << freqs[i];
+//         outFile << '\n';
+//     }
+//     outFile.flush();
 
-    std::ifstream _is("data/file_2.txt");
-    // int nextByte;
-    while ((nextByte = _is.get()) != EOF) {
-        tree->encode((byte)nextByte, outFile);
-    }
-    outFile.flush();
-}
+//     // build a HCTree
+//     HCTree* tree = new HCTree();
+//     tree->build(freqs);
+
+//     std::ifstream _is(inFileName);
+//     // int nextByte;
+//     while ((nextByte = _is.get()) != EOF) {
+//         tree->encode((byte)nextByte, outFile);
+//     }
+//     outFile.flush();
+// }
 
 // TEST(SimpleHCTreeTest, DECODER_TEST) {
 //     const int ASCII_SIZE = 256;
+
+//     string inFileName = "compressed.txt";
+//     string outFileName = "uncompressed.txt";
 
 //     // initializes a frequency array
 //     vector<unsigned int> freqs(ASCII_SIZE, 0);
 
 //     // counts frequecy of each character in a given file
-//     std::ifstream is("compressed.txt");
+//     std::ifstream is(inFileName);
 //     char nextline[ASCII_SIZE];
 //     int asciiIdx = 0;
 //     // better to read a line instead of read a char
@@ -115,7 +119,7 @@ TEST(SimpleHCTreeTest, ENCODER_TEST) {
 //     tree->build(freqs);
 
 //     // puts frequencies and the encoded to an output file
-//     std::ofstream outputFile("uncompressed.txt");
+//     std::ofstream outputFile(outFileName);
 
 //     while (!is.eof()) {
 //         byte next = tree->decode(is);

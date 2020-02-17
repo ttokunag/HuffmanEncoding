@@ -75,7 +75,8 @@ int main(int argc, char* argv[]) {
     FileUtils fu;
 
     // checks if a given file name is valid
-    if (!fu.isValidFile(argv[2]) && !fu.isEmptyFile(argv[2])) {
+    if (!fu.isValidFile(argv[2]) || fu.isEmptyFile(argv[2])) {
+        std::ofstream out(argv[3]);
         return -1;
     }
 

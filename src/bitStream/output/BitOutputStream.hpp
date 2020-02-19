@@ -28,7 +28,8 @@ class BitOutputStream {
      */
     explicit BitOutputStream(ostream& os, unsigned int bufSize) : out(os) {
         // initializes a buffer with a given size
-        buf = new char[bufSize];
+        buf = new char[8 * bufSize];
+        this->bufSize = bufSize;
         nbits = 0;
     };
 

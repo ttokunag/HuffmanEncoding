@@ -27,7 +27,15 @@ void BitOutputStream::flush() {
     // clear a buffer for a further flush
     delete[] buf;
     buf = new char[8 * bufSize];
+    nbits = 0;
 }
 
 /* TODO */
-void BitOutputStream::writeBit(unsigned int i) {}
+void BitOutputStream::writeBit(unsigned int i) {
+    // checks if a buffer still has spaces
+    if (nbits == 8 * bufSize) {
+        this->flush();
+    }
+
+    buf[nbits++] = i;
+}

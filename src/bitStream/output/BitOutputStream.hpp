@@ -21,8 +21,16 @@ class BitOutputStream {
     unsigned int nbits;    // number of bits have been writen to buf
 
   public:
-    /* TODO: add function header and implement */
-    explicit BitOutputStream(ostream& os, unsigned int bufSize) : out(os){};
+    /*
+     * a constructor of BitOutputStream
+     * @param ostream: an output stream a program write bytes
+     * @param int: an integer specifying the size of char* buf
+     */
+    explicit BitOutputStream(ostream& os, unsigned int bufSize) : out(os) {
+        // initializes a buffer with a given size
+        buf = new char[bufSize];
+        nbits = 0;
+    };
 
     /* TODO: add function header */
     void flush();

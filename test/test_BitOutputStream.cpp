@@ -15,5 +15,8 @@ TEST(BitOutputStreamTests, SIMPLE_TEST) {
 
     string bitsStr = "10000000";
     unsigned int asciiVal = stoi(bitsStr, nullptr, 2);
+
     // ASSERT_EQ(ss.get(), asciiVal);
+    ASSERT_EQ(ss.get(), 1);
+    ASSERT_EQ(ss.get(), 0);
 }

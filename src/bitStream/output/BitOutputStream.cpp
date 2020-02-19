@@ -17,7 +17,9 @@ void BitOutputStream::flush() {
 
         // fill padding zeros at the end of a current byte
         int endByteIdx = nbits + (8 - remainder);
-        fill(buf[0], buf[endByteIdx], 0);
+        for (int i = nbits; i < endByteIdx; i++) {
+            buf[i] = 0;
+        }
     }
 
     // writes btis to an output stream

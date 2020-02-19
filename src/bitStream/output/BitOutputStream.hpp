@@ -38,6 +38,8 @@ class BitOutputStream {
 
     /* TODO: add function header */
     void writeBit(unsigned int i);
+
+    ~BitOutputStream() { delete[] buf; };
 };
 
 #endif

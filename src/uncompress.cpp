@@ -51,7 +51,41 @@ void pseudoDecompression(string inFileName, string outFileName) {
 }
 
 /* TODO: True decompression with bitwise i/o and small header (final) */
-void trueDecompression(string inFileName, string outFileName) {}
+void trueDecompression(string inFileName, string outFileName) {
+    // initializes a frequency array
+    vector<unsigned int> freqs(ASCII_SIZE, 0);
+
+    // counts frequecy of each character in a given file
+    std::ifstream is(inFileName);
+    char nextline[ASCII_SIZE];
+    int asciiIdx = 0;
+    // better to read a line instead of read a char
+    while (asciiIdx < ASCII_SIZE && !is.eof()) {
+        is.getline(nextline, ASCII_SIZE);
+        // unsigned int freq = nextByte - '0';
+        unsigned int freq = atoi(nextline);
+        if (freq > 0) {
+            freqs[asciiIdx] = freq;
+        }
+        asciiIdx++;
+    }
+
+    // build a HCTree
+    HCTree* tree = new HCTree();
+    tree->build(freqs);
+
+    // puts frequencies and the encoded to an output file
+    std::ofstream out(outFileName);
+    BitInputStream bis(is, 4000);
+
+    while (!bis.eof()) {
+        byte next = tree->decode(bis);
+        if (next != NULL) {
+            out << next;
+        }
+    }
+    out.flush();
+}
 
 /* TODO: Main program that runs the uncompress */
 int main(int argc, char* argv[]) {
@@ -78,13 +112,24 @@ int main(int argc, char* argv[]) {
 
     FileUtils fu;
 
+    if (strcmp(argv[1], "--ascii") == 0) {
+        isAsciiOutput = true;
+    }
+
+    char* inFile = isAsciiOutput ? argv[2] : argv[1];
+    char* outFile = isAsciiOutput ? argv[3] : argv[2];
+
     // checks if a given file name is valid
-    if (!fu.isValidFile(argv[2]) || fu.isEmptyFile(argv[2])) {
-        std::ofstream out(argv[3]);
+    if (!fu.isValidFile(inFile) || fu.isEmptyFile(inFile)) {
+        std::ofstream out(outFile);
         return -1;
     }
 
-    pseudoDecompression(argv[2], argv[3]);
+    if (isAsciiOutput) {
+        pseudoDecompression(inFile, outFile);
+    } else {
+        trueDecompression(inFile, outFile);
+    }
 
     return 0;
 }

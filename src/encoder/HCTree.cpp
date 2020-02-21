@@ -128,12 +128,46 @@ void HCTree::buildCodeMap(HCNode* root, string code) {
 
 /* TODO */
 byte HCTree::decode(BitInputStream& in) const {
-    unsigned char symbol = 0;
-    for (int i = 0; i < 8; i++) {
-        unsigned int nextBit = in.readBit();
-        symbol = (symbol << 1) | nextBit;
+    int nextByte;
+
+    // build() must be called before decoding
+    if (root == nullptr) {
+        return NULL;
     }
-    return (byte)symbol;
+    // when we're at a child node
+    else if (root->c0 == nullptr && root->c1 == nullptr) {
+        if (!in.eof()) {
+            return root->symbol;
+        } else {
+            return NULL;
+        }
+    }
+
+    unsigned int nextBit;
+    HCNode* node = root;
+
+    // read input stream until hitting the end
+    while (true) {
+        nextBit = in.readBit();
+        if (in.eof()) {
+            break;
+        }
+
+        node = (nextBit == 0) ? node = node->c0 : node->c1;
+
+        if (node->c0 == nullptr && node->c1 == nullptr) {
+            return node->symbol;
+        }
+    }
+
+    return NULL;
+
+    // unsigned char symbol = 0;
+    // for (int i = 0; i < 8; i++) {
+    //     unsigned int nextBit = in.readBit();
+    //     symbol = (symbol << 1) | nextBit;
+    // }
+    // return (byte)symbol;
 }
 
 /*
@@ -145,7 +179,9 @@ byte HCTree::decode(istream& in) const {
     // build() must be called before decoding
     if (root == nullptr) {
         return NULL;
-    } else if (root->c0 == nullptr && root->c1 == nullptr) {
+    }
+    // when we're at a child node
+    else if (root->c0 == nullptr && root->c1 == nullptr) {
         if ((nextByte = in.get()) != EOF) {
             return root->symbol;
         } else {

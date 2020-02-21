@@ -110,8 +110,15 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    // pseudoCompression(argv[2], argv[3]);
-    trueCompression(argv[1], argv[2]);
+    if (strcmp(argv[1], "--ascii") == 0) {
+        isAsciiOutput = true;
+    }
+
+    if (isAsciiOutput) {
+        pseudoCompression(argv[2], argv[3]);
+    } else {
+        trueCompression(argv[1], argv[2]);
+    }
 
     return 0;
 }

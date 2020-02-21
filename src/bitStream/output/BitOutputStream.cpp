@@ -21,10 +21,14 @@ void BitOutputStream::flush() {
             buf[i] = 0;
         }
     }
+    // when a byte is entirely filled
+    else {
+        numBytes = nbits / 8;
+    }
 
     // writes btis to an output stream
     int writeSize = (remainder == 0) ? numBytes : (numBytes + 1);
-    // out.write(buf, writeSize);
+
     for (int i = 0; i < writeSize; i++) {
         unsigned char nextChar = 0;
         for (int j = 0; j < 8; j++) {

@@ -16,13 +16,7 @@ void BitInputStream::fill() {
     for (int i = 0; i < numRead; i++) {
         unsigned char currChar = charBuf[i];
         for (int j = 0; j < 8; j++) {
-            // buf[(8 * i) + j] = ((currChar << j) >> (8 + j));
-            if (currChar % 2 == 0) {
-                buf[(8 * (i + 1) - 1) - j] = '0';
-            } else {
-                buf[(8 * (i + 1) - 1) - j] = '1';
-            }
-            currChar /= 2;
+            buf[(8 * i) + j] = (currChar >> (7 - j)) & 1;
         }
     }
 
@@ -33,7 +27,7 @@ void BitInputStream::fill() {
 bool BitInputStream::atEndOfFile() {
     int numBytesRead = in.gcount();
 
-    if (nbits >= 8 * numBytesRead) {
+    if (numBytesRead == 0 || nbits >= 8 * numBytesRead) {
         return true;
     }
     return false;
@@ -56,5 +50,5 @@ unsigned int BitInputStream::readBit() {
     }
 
     char nextBit = buf[nbits++];
-    return (nextBit == '0') ? 0 : 1;
+    return nextBit;
 }

@@ -95,7 +95,12 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 }
 
 /* TODO */
-void HCTree::encode(byte symbol, BitOutputStream& out) const {}
+void HCTree::encode(byte symbol, BitOutputStream& out) const {
+    for (int i = 0; i < 8; i++) {
+        unsigned int nextBit = (symbol >> (7 - i)) & 1;
+        out.writeBit(nextBit);
+    }
+}
 
 /* TODO */
 void HCTree::encode(byte symbol, ostream& out) const {
@@ -121,7 +126,14 @@ void HCTree::buildCodeMap(HCNode* root, string code) {
 }
 
 /* TODO */
-byte HCTree::decode(BitInputStream& in) const { return ' '; }
+byte HCTree::decode(BitInputStream& in) const {
+    unsigned char symbol = 0;
+    for (int i = 0; i < 8; i++) {
+        unsigned int nextBit = in.readBit();
+        symbol = (symbol << 1) | nextBit;
+    }
+    return (byte)symbol;
+}
 
 /*
  * Decodes a given input stream.

@@ -47,7 +47,37 @@ void pseudoCompression(string inFileName, string outFileName) {
 }
 
 /* TODO: True compression with bitwise i/o and small header (final) */
-void trueCompression(string inFileName, string outFileName) {}
+void trueCompression(string inFileName, string outFileName) {
+    // initializes a frequency array
+    vector<unsigned int> freqs(ASCII_SIZE, 0);
+
+    // counts frequecy of each character in a given file
+    std::ifstream is(inFileName);
+    int nextByte;
+    while ((nextByte = is.get()) != EOF) {
+        freqs[(unsigned int)nextByte] += 1;
+    }
+
+    // puts frequencies and the encoded to an output file
+    std::ofstream out(outFileName);
+    for (unsigned int i = 0; i < ASCII_SIZE; i++) {
+        out << freqs[i];
+        out << '\n';
+    }
+    out.flush();
+
+    // build a HCTree
+    HCTree* tree = new HCTree();
+    tree->build(freqs);
+
+    BitOutputStream bos(out, 4000);
+
+    std::ifstream _is(inFileName);
+    while ((nextByte = _is.get()) != EOF) {
+        tree->encode((byte)nextByte, bos);
+    }
+    bos.flush();
+}
 
 /* TODO: Main program that runs the compress */
 int main(int argc, char* argv[]) {
@@ -80,7 +110,8 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    pseudoCompression(argv[2], argv[3]);
+    // pseudoCompression(argv[2], argv[3]);
+    trueCompression(argv[1], argv[2]);
 
     return 0;
 }

@@ -96,8 +96,9 @@ void HCTree::build(const vector<unsigned int>& freqs) {
 
 /* TODO */
 void HCTree::encode(byte symbol, BitOutputStream& out) const {
-    for (int i = 0; i < 8; i++) {
-        unsigned int nextBit = (symbol >> (7 - i)) & 1;
+    string code = codes[symbol];
+    for (int i = 0; i < code.size(); i++) {
+        unsigned int nextBit = (code[i] == '0') ? 0 : 1;
         out.writeBit(nextBit);
     }
 }

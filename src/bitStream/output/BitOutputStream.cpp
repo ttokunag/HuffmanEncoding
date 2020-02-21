@@ -23,8 +23,17 @@ void BitOutputStream::flush() {
     }
 
     // writes btis to an output stream
-    int writeSize = (remainder == 0) ? (8 * numBytes) : (8 * (numBytes + 1));
-    out.write(buf, writeSize);
+    int writeSize = (remainder == 0) ? numBytes : (numBytes + 1);
+    // out.write(buf, writeSize);
+    for (int i = 0; i < writeSize; i++) {
+        unsigned char nextChar = 0;
+        for (int j = 0; j < 8; j++) {
+            nextChar = nextChar << 1;
+            nextChar += buf[(8 * i) + j];
+        }
+        out.put(nextChar);
+    }
+    out.flush();
 
     // clear a buffer for a further flush
     delete[] buf;

@@ -13,8 +13,8 @@ TEST(BitInputStreamTests, SIMPLE_TEST) {
 
     stringstream ss;
     ss.write(&byte, 1);
-    BitInputStream bis(ss, 1);
+    BitInputStream bis(ss, 2);
 
-    // ASSERT_EQ(1, bis.readBit());
-    // ASSERT_EQ(0, bis.readBit());
+    ASSERT_EQ(1, bis.readBit());
+    ASSERT_EQ(0, bis.readBit());
 }

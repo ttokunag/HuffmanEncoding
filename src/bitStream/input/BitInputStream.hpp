@@ -34,6 +34,8 @@ class BitInputStream {
         nbits = 0;
         this->bufSize = bufSize;
         eofBit = false;
+
+        fill();
     };
 
     /* TODO: add function header */
@@ -44,6 +46,8 @@ class BitInputStream {
 
     /* TODO: add function header */
     unsigned int readBit();
+
+    ~BitInputStream() { delete[] buf; }
 };
 
 #endif

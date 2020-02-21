@@ -55,40 +55,40 @@ TEST(SimpleHCTreeTest, BUILD_TEST) {
     tree.build(freqs);
 }
 
-TEST(SimpleHCTreeTest, ENCODER_TEST) {
-    const int ASCII_SIZE = 256;
-    // initializes a frequency array
-    vector<unsigned int> freqs(ASCII_SIZE, 0);
+// TEST(SimpleHCTreeTest, ENCODER_TEST) {
+//     const int ASCII_SIZE = 256;
+//     // initializes a frequency array
+//     vector<unsigned int> freqs(ASCII_SIZE, 0);
 
-    string inFileName = "data/input.txt";
-    string outFileName = "compressed.txt";
+//     string inFileName = "data/input.txt";
+//     string outFileName = "compressed.txt";
 
-    // counts frequecy of each character in a given file
-    std::ifstream is(inFileName);
-    int nextByte;
-    while ((nextByte = is.get()) != EOF) {
-        freqs[(unsigned int)nextByte] += 1;
-    }
+//     // counts frequecy of each character in a given file
+//     std::ifstream is(inFileName);
+//     int nextByte;
+//     while ((nextByte = is.get()) != EOF) {
+//         freqs[(unsigned int)nextByte] += 1;
+//     }
 
-    // puts frequencies and the encoded to an output file
-    std::ofstream outFile(outFileName);
-    for (unsigned int i = 0; i < ASCII_SIZE; i++) {
-        outFile << freqs[i];
-        outFile << '\n';
-    }
-    outFile.flush();
+//     // puts frequencies and the encoded to an output file
+//     std::ofstream outFile(outFileName);
+//     for (unsigned int i = 0; i < ASCII_SIZE; i++) {
+//         outFile << freqs[i];
+//         outFile << '\n';
+//     }
+//     outFile.flush();
 
-    // build a HCTree
-    HCTree* tree = new HCTree();
-    tree->build(freqs);
+//     // build a HCTree
+//     HCTree* tree = new HCTree();
+//     tree->build(freqs);
 
-    std::ifstream _is(inFileName);
-    // int nextByte;
-    while ((nextByte = _is.get()) != EOF) {
-        tree->encode((byte)nextByte, outFile);
-    }
-    outFile.flush();
-}
+//     std::ifstream _is(inFileName);
+//     // int nextByte;
+//     while ((nextByte = _is.get()) != EOF) {
+//         tree->encode((byte)nextByte, outFile);
+//     }
+//     outFile.flush();
+// }
 
 // TEST(SimpleHCTreeTest, DECODER_TEST) {
 //     const int ASCII_SIZE = 256;

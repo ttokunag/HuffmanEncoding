@@ -13,8 +13,12 @@
 
 const int ASCII_SIZE = 256;
 
-/* TODO: add pseudo compression with ascii encoding and naive header
- * (checkpoint) */
+/**
+ * a fuction for pseudo-compression, that is, writes char of either 0 or 1 to an
+ * output file
+ * @param string: name of an input file
+ * @param string: name of an output file
+ */
 void pseudoCompression(string inFileName, string outFileName) {
     // initializes a frequency array
     vector<unsigned int> freqs(ASCII_SIZE, 0);
@@ -46,7 +50,12 @@ void pseudoCompression(string inFileName, string outFileName) {
     outFile.flush();
 }
 
-/* TODO: True compression with bitwise i/o and small header (final) */
+/**
+ * a fuction for true-compression, that is, writes binary codes to an
+ * output file
+ * @param string: name of an input file
+ * @param string: name of an output file
+ */
 void trueCompression(string inFileName, string outFileName) {
     // initializes a frequency array
     vector<unsigned int> freqs(ASCII_SIZE, 0);
@@ -111,6 +120,7 @@ int main(int argc, char* argv[]) {
 
     FileUtils fu;
 
+    // determine which compression this program does based on a flag given
     if (strcmp(argv[1], "--ascii") == 0) {
         isAsciiOutput = true;
     }

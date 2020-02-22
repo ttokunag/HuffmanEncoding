@@ -1,7 +1,8 @@
 /**
- * TODO: file header
+ * This file implements a huffman coding tree which is used for data compression
+ * and decompression
  *
- * Author:
+ * Author: Tomoya Tokunaga
  */
 #ifndef HCTREE_HPP
 #define HCTREE_HPP
@@ -16,7 +17,10 @@
 
 using namespace std;
 
-/** TODO: class header */
+/**
+ * HCTree class is for implementing a Huffman coding tree. This data structure
+ * is used for data compression and decompression
+ */
 class HCTree {
   private:
     HCNode* root;            // the root of HCTree
@@ -38,19 +42,40 @@ class HCTree {
      */
     ~HCTree();
 
-    /* TODO: add function header */
+    /*
+     * Builds a HCTree based on a given vector which represents frequency of
+     * ascii codes (a value at index i is frequecy of ascii code i)
+     *
+     * @param vector<unsigned int>: a vector which represents frequency
+     */
     void build(const vector<unsigned int>& freqs);
 
-    /* TODO: add function header */
+    /**
+     * A function which encodes a given symbol and writes encoded bits of the
+     * symbol to BitOutputStream
+     * @param byte: a symbol to be encoded
+     * @param BitOutputStream: output stream to be written
+     */
     void encode(byte symbol, BitOutputStream& out) const;
 
-    /* TODO: add function header */
+    /**
+     * A function which encodes a given symbol and writes encoded bits of the
+     * symbol to output stream
+     * @param byte: a symbol to be encoded
+     * @param ostream: output stream to be written
+     */
     void encode(byte symbol, ostream& out) const;
 
-    /* TODO: add function header */
+    /**
+     * decoder of btis of a given input stream
+     * @param BitInputStream: an input stream to be decoded
+     */
     byte decode(BitInputStream& in) const;
 
-    /* TODO: add function header */
+    /**
+     * decoder of btis of a given input stream
+     * @param istream: an input stream to be decoded
+     */
     byte decode(istream& in) const;
 };
 

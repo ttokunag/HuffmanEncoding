@@ -37,7 +37,7 @@ void BitOutputStream::flush() {
         }
         out.put(nextChar);
     }
-    out.flush();
+    // out.flush();
 
     // clear a buffer for a further flush
     delete[] buf;

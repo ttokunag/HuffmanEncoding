@@ -60,17 +60,19 @@ void trueCompression(string inFileName, string outFileName) {
 
     // puts frequencies and the encoded to an output file
     std::ofstream out(outFileName);
+    std::ostringstream oss;
+
     for (unsigned int i = 0; i < ASCII_SIZE; i++) {
-        out << freqs[i];
-        out << '\n';
+        oss << freqs[i];
+        oss << '\n';
     }
-    out.flush();
 
     // build a HCTree
     HCTree* tree = new HCTree();
     tree->build(freqs);
 
-    BitOutputStream bos(out, 4000);
+    // BitOutputStream bos(out, 4000);
+    BitOutputStream bos(oss, 4000);
 
     std::ifstream _is(inFileName);
     while ((nextByte = _is.get()) != EOF) {
@@ -78,17 +80,10 @@ void trueCompression(string inFileName, string outFileName) {
     }
     bos.flush();
 
-    ofstream anotherOut("tester.txt");
-    ifstream anotherIn(outFileName);
-    anotherOut << bos.getTotalBits();
-    anotherOut << '\n';
-
-    unsigned char nextChar;
-    while (!anotherIn.eof()) {
-        nextChar = (unsigned char)anotherIn.get();
-        anotherOut << nextChar;
-    }
-    anotherOut.flush();
+    out << bos.getTotalBits();
+    out << '\n';
+    out << oss.str();
+    out.flush();
 }
 
 /* TODO: Main program that runs the compress */
@@ -116,14 +111,17 @@ int main(int argc, char* argv[]) {
 
     FileUtils fu;
 
-    // checks if a given file name is valid
-    if (!fu.isValidFile(argv[2]) || fu.isEmptyFile(argv[2])) {
-        std::ofstream out(argv[3]);
-        return -1;
-    }
-
     if (strcmp(argv[1], "--ascii") == 0) {
         isAsciiOutput = true;
+    }
+
+    char* inFile = isAsciiOutput ? argv[2] : argv[1];
+    char* outFile = isAsciiOutput ? argv[3] : argv[2];
+
+    // checks if a given file name is valid
+    if (!fu.isValidFile(inFile) || fu.isEmptyFile(inFile)) {
+        std::ofstream out(outFile);
+        return -1;
     }
 
     if (isAsciiOutput) {

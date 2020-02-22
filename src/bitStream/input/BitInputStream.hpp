@@ -26,6 +26,7 @@ class BitInputStream {
 
   public:
     unsigned int totalBits;
+    unsigned int numBitsRead;
     /*
      * A constructor of BitInputStream
      */
@@ -33,7 +34,8 @@ class BitInputStream {
         // initialize a buffer array
         buf = new char[bufSize * 8];
         nbits = 0;
-        totalBits = 0;
+        totalBits = INT64_MAX;
+        numBitsRead = 0;
         this->bufSize = bufSize;
         eofBit = false;
 

@@ -27,7 +27,8 @@ void BitInputStream::fill() {
 bool BitInputStream::atEndOfFile() {
     int numBytesRead = in.gcount();
 
-    if (numBytesRead == 0 || nbits >= 8 * numBytesRead || nbits >= totalBits) {
+    if (numBytesRead == 0 || nbits >= 8 * numBytesRead ||
+        numBitsRead >= totalBits) {
         return true;
     }
     return false;
@@ -50,6 +51,7 @@ unsigned int BitInputStream::readBit() {
     }
 
     char nextBit = buf[nbits++];
+    numBitsRead++;
     return nextBit;
 }
 

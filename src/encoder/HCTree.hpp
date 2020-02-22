@@ -8,7 +8,6 @@
 
 #include <string.h>
 #include <fstream>
-#include <map>
 #include <queue>
 #include <vector>
 #include "BitInputStream.hpp"
@@ -23,7 +22,6 @@ class HCTree {
     HCNode* root;            // the root of HCTree
     vector<HCNode*> leaves;  // a vector storing pointers to all leaf HCNodes
     string codes[256];
-    // map<byte, string> mapCode;
 
     void deleteAll(HCNode* node);
 
@@ -35,7 +33,9 @@ class HCTree {
      */
     HCTree() { root = nullptr; }
 
-    /* TODO: add function header */
+    /**
+     * a destructor of a HCTree
+     */
     ~HCTree();
 
     /* TODO: add function header */

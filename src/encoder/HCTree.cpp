@@ -94,7 +94,12 @@ void HCTree::build(const vector<unsigned int>& freqs) {
     buildCodeMap(root, "");
 }
 
-/* TODO */
+/**
+ * A function which encodes a given symbol and writes encoded bits of the symbol
+ * to BitOutputStream
+ * @param byte: a symbol to be encoded
+ * @param BitOutputStream: output stream to be written
+ */
 void HCTree::encode(byte symbol, BitOutputStream& out) const {
     string code = codes[symbol];
     for (int i = 0; i < code.size(); i++) {
@@ -103,13 +108,23 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {
     }
 }
 
-/* TODO */
+/**
+ * A function which encodes a given symbol and writes encoded bits of the symbol
+ * to output stream
+ * @param byte: a symbol to be encoded
+ * @param ostream: output stream to be written
+ */
 void HCTree::encode(byte symbol, ostream& out) const {
     // string code = codes.at(symbol);
     string code = codes[symbol];
     out.write(code.c_str(), (streamsize)code.size());
 }
 
+/**
+ * A function which builds a mapping of ascii code to an encoded code
+ * @param HCNode*: a reference of a current node
+ * @param string: a code for a certain symbol
+ */
 void HCTree::buildCodeMap(HCNode* root, string code) {
     // base case when visiting an empty node
     if (root == nullptr) {
@@ -122,11 +137,15 @@ void HCTree::buildCodeMap(HCNode* root, string code) {
         // mapCode.insert(pair<byte, string>(root->symbol, copy));
     }
 
+    // recursive phase
     buildCodeMap(root->c0, code + "0");
     buildCodeMap(root->c1, code + "1");
 }
 
-/* TODO */
+/**
+ * decoder of btis of a given input stream
+ * @param BitInputStream: an input stream to be decoded
+ */
 byte HCTree::decode(BitInputStream& in) const {
     int nextByte;
 
@@ -167,8 +186,9 @@ byte HCTree::decode(BitInputStream& in) const {
     return NULL;
 }
 
-/*
- * Decodes a given input stream.
+/**
+ * decoder of btis of a given input stream
+ * @param istream: an input stream to be decoded
  */
 byte HCTree::decode(istream& in) const {
     int nextByte;

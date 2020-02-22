@@ -1,7 +1,7 @@
 /**
- * TODO: file header
+ * This program uncompress a file encoded by compress.cpp
  *
- * Author:
+ * Author: Tomoya Tokunaga
  */
 #include <fstream>
 #include <iostream>
@@ -13,7 +13,11 @@
 
 const int ASCII_SIZE = 256;
 
-/* TODO: Pseudo decompression with ascii encoding and naive header (checkpoint)
+/**
+ * a fuction for pseudo-decompression, that is, reading a char of 0 or 1 and
+ * decode using a huffman coding tree
+ * @param string: name of an input file
+ * @param string: name of an output file
  */
 void pseudoDecompression(string inFileName, string outFileName) {
     // initializes a frequency array
@@ -51,7 +55,12 @@ void pseudoDecompression(string inFileName, string outFileName) {
     outputFile.flush();
 }
 
-/* TODO: True decompression with bitwise i/o and small header (final) */
+/**
+ * a fuction for pseudo-decompression, that is, reading binary codes and
+ * decode using a huffman coding tree
+ * @param string: name of an input file
+ * @param string: name of an output file
+ */
 void trueDecompression(string inFileName, string outFileName) {
     // initializes a frequency array
     vector<unsigned int> freqs(ASCII_SIZE, 0);
@@ -120,6 +129,7 @@ int main(int argc, char* argv[]) {
 
     FileUtils fu;
 
+    // determine which decompression this program does based on a flag given
     if (strcmp(argv[1], "--ascii") == 0) {
         isAsciiOutput = true;
     }

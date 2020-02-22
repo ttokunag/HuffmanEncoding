@@ -1,7 +1,8 @@
 /**
- * TODO: file header
+ * This file implements a custom output stream class for data compression and
+ * decompression
  *
- * Author:
+ * Author: Tomoya Tokunaga
  */
 #ifndef BITOUTPUTSTREAM_HPP
 #define BITOUTPUTSTREAM_HPP
@@ -12,7 +13,7 @@ typedef unsigned char byte;
 
 using namespace std;
 
-/** TODO: class header */
+/** A custom output stream class for data compression and decompression */
 class BitOutputStream {
   private:
     ostream& out;          // reference to the output stream to use
@@ -37,14 +38,19 @@ class BitOutputStream {
         totalBits = 0;
     };
 
-    /* TODO: add function header */
+    /* write data on an original output stream  */
     void flush();
 
-    /* TODO: add function header */
+    /**
+     * a function which writes a bit to a char buffer
+     * @param unsigned int: a bit to be written on a buffer
+     */
     void writeBit(unsigned int i);
 
+    // destructor of a BitOutputStream class
     ~BitOutputStream() { delete[] buf; };
 
+    // getter function for totalBits
     unsigned int getTotalBits();
 };
 

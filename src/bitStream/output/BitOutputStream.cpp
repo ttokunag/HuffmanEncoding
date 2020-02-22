@@ -1,16 +1,17 @@
 /**
- * TODO: file header
+ * This file implements a custom output stream class for data compression and
+ * decompression
  *
- * Author:
+ * Author: Tomoya Tokunaga
  */
 #include "BitOutputStream.hpp"
 
-/* TODO */
+/* write data on an original output stream  */
 void BitOutputStream::flush() {
     int remainder = 0;
     int numBytes = 0;
 
-    // checks if a buffer is entirely filled
+    // checks if a buffer is entirely filled. if it's not put padding 0s
     if (nbits % 8 != 0) {
         remainder = nbits % 8;
         numBytes = (nbits - remainder) / 8;
@@ -45,7 +46,10 @@ void BitOutputStream::flush() {
     nbits = 0;
 }
 
-/* TODO */
+/**
+ * a function which writes a bit to a char buffer
+ * @param unsigned int: a bit to be written on a buffer
+ */
 void BitOutputStream::writeBit(unsigned int i) {
     // checks if a buffer still has spaces
     if (nbits == 8 * bufSize) {
@@ -53,7 +57,8 @@ void BitOutputStream::writeBit(unsigned int i) {
     }
 
     buf[nbits++] = i;
-    totalBits++;
+    totalBits++;  // increment the number of bits written
 }
 
+// getter function for totalBits
 unsigned int BitOutputStream::getTotalBits() { return totalBits; }

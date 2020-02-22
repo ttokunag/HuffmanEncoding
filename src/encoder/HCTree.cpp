@@ -137,6 +137,10 @@ byte HCTree::decode(BitInputStream& in) const {
     // when we're at a child node
     else if (root->c0 == nullptr && root->c1 == nullptr) {
         if (!in.eof()) {
+            in.incrementNBits();
+            if (in.getNBits() > in.totalBits) {
+                return NULL;
+            }
             return root->symbol;
         } else {
             return NULL;
@@ -161,13 +165,6 @@ byte HCTree::decode(BitInputStream& in) const {
     }
 
     return NULL;
-
-    // unsigned char symbol = 0;
-    // for (int i = 0; i < 8; i++) {
-    //     unsigned int nextBit = in.readBit();
-    //     symbol = (symbol << 1) | nextBit;
-    // }
-    // return (byte)symbol;
 }
 
 /*

@@ -20,6 +20,9 @@ class BitOutputStream {
     unsigned int bufSize;  // size of buffer in byte
     unsigned int nbits;    // number of bits have been writen to buf
 
+    unsigned int totalBits;  // the number of btis in an output file
+                             // to deal with 0s padding problem
+
   public:
     /*
      * a constructor of BitOutputStream
@@ -31,6 +34,7 @@ class BitOutputStream {
         buf = new char[8 * bufSize];
         this->bufSize = bufSize;
         nbits = 0;
+        totalBits = 0;
     };
 
     /* TODO: add function header */
@@ -40,6 +44,8 @@ class BitOutputStream {
     void writeBit(unsigned int i);
 
     ~BitOutputStream() { delete[] buf; };
+
+    unsigned int getTotalBits();
 };
 
 #endif

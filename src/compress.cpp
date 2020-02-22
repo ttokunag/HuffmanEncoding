@@ -77,6 +77,18 @@ void trueCompression(string inFileName, string outFileName) {
         tree->encode((byte)nextByte, bos);
     }
     bos.flush();
+
+    ofstream anotherOut("tester.txt");
+    ifstream anotherIn(outFileName);
+    anotherOut << bos.getTotalBits();
+    anotherOut << '\n';
+
+    unsigned char nextChar;
+    while (!anotherIn.eof()) {
+        nextChar = (unsigned char)anotherIn.get();
+        anotherOut << nextChar;
+    }
+    anotherOut.flush();
 }
 
 /* TODO: Main program that runs the compress */

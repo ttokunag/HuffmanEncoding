@@ -53,4 +53,7 @@ void BitOutputStream::writeBit(unsigned int i) {
     }
 
     buf[nbits++] = i;
+    totalBits++;
 }
+
+unsigned int BitOutputStream::getTotalBits() { return totalBits; }

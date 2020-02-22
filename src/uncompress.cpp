@@ -23,6 +23,7 @@ void pseudoDecompression(string inFileName, string outFileName) {
     std::ifstream is(inFileName);
     char nextline[ASCII_SIZE];
     int asciiIdx = 0;
+
     // better to read a line instead of read a char
     while (asciiIdx < ASCII_SIZE && !is.eof()) {
         is.getline(nextline, ASCII_SIZE);
@@ -59,6 +60,10 @@ void trueDecompression(string inFileName, string outFileName) {
     std::ifstream is(inFileName);
     char nextline[ASCII_SIZE];
     int asciiIdx = 0;
+
+    is.getline(nextline, ASCII_SIZE);
+    unsigned int totalBits = atoi(nextline);
+
     // better to read a line instead of read a char
     while (asciiIdx < ASCII_SIZE && !is.eof()) {
         is.getline(nextline, ASCII_SIZE);
@@ -77,11 +82,14 @@ void trueDecompression(string inFileName, string outFileName) {
     // puts frequencies and the encoded to an output file
     std::ofstream out(outFileName);
     BitInputStream bis(is, 4000);
+    bis.setTotalBits(totalBits);
 
     while (!bis.eof()) {
         byte next = tree->decode(bis);
         if (next != NULL) {
             out << next;
+        } else {
+            break;
         }
     }
     out.flush();

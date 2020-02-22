@@ -25,6 +25,7 @@ class BitInputStream {
     bool atEndOfFile();
 
   public:
+    unsigned int totalBits;
     /*
      * A constructor of BitInputStream
      */
@@ -32,6 +33,7 @@ class BitInputStream {
         // initialize a buffer array
         buf = new char[bufSize * 8];
         nbits = 0;
+        totalBits = 0;
         this->bufSize = bufSize;
         eofBit = false;
 
@@ -48,6 +50,12 @@ class BitInputStream {
     unsigned int readBit();
 
     ~BitInputStream() { delete[] buf; }
+
+    void setTotalBits(unsigned int totalBits);
+
+    void incrementNBits();
+
+    unsigned int getNBits();
 };
 
 #endif

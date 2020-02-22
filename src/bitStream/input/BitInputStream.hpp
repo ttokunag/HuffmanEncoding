@@ -1,7 +1,7 @@
 /**
- * TODO: file header
+ * A custom class of an input stream for data compression
  *
- * Author:
+ * Author: Tomoya Tokunaga
  */
 #ifndef BITINPUTSTREAM_HPP
 #define BITINPUTSTREAM_HPP
@@ -12,7 +12,9 @@ typedef unsigned char byte;
 
 using namespace std;
 
-/** TODO: class header */
+/**
+ * This class is a custom input stream class for data compression/decompression
+ */
 class BitInputStream {
   private:
     istream& in;           // reference to the input stream to use
@@ -21,7 +23,9 @@ class BitInputStream {
     unsigned int nbits;    // number of bits that have been read from buf
     bool eofBit;           // true when trying to read past the end of the file
 
-    /* TODO: add function header */
+    /**
+     * returns true if there's no more bits to read from an input stream
+     */
     bool atEndOfFile();
 
   public:
@@ -29,6 +33,8 @@ class BitInputStream {
     unsigned int numBitsRead;
     /*
      * A constructor of BitInputStream
+     * @param istream: input stream for reading a encoded file
+     * @param unsigned int: the size of a buffer
      */
     explicit BitInputStream(istream& is, unsigned int bufSize) : in(is) {
         // initialize a buffer array
@@ -42,21 +48,33 @@ class BitInputStream {
         fill();
     };
 
-    /* TODO: add function header */
+    /**
+     * fills a bit buffer of a given size from an input stream
+     */
     void fill();
 
-    /* TODO: add function header */
+    /* Returns true when trying to read past the end of the file, false
+     * otherwise */
     bool eof();
 
-    /* TODO: add function header */
+    /**
+     * reads a bit from a char buffer. return 0 if a read char is 0, otherwise
+     * returns 1
+     */
     unsigned int readBit();
 
+    // a destructor of BitInputStream object
     ~BitInputStream() { delete[] buf; }
 
+    /* setter function for totalBits */
     void setTotalBits(unsigned int totalBits);
 
+    /*  a function incrementing a nbits
+        this is used when the case a huffman coding tree contains only one node
+     */
     void incrementNBits();
 
+    // getter function of nbits
     unsigned int getNBits();
 };
 

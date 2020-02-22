@@ -1,5 +1,5 @@
 /**
- * TODO: This file implements HCTree class
+ * This file implements HCTree class
  *
  * Author: Tomoya Tokunaga
  */

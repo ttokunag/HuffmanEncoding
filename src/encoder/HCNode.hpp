@@ -30,10 +30,10 @@ class HCNode {
 
 /* For printing an HCNode to an ostream. Possibly useful for debugging */
 ostream& operator<<(ostream&, const HCNode&) __attribute__((weak));
-ostream& operator<<(ostream& stm, const HCNode& n) {
-    stm << "[" << n.count << "," << (int)(n.symbol) << "]";
-    return stm;
-}
+// ostream& operator<<(ostream& stm, const HCNode& n) {
+//     stm << "[" << n.count << "," << (int)(n.symbol) << "]";
+//     return stm;
+// }
 
 /* Comparator of HCNode pointer. In priority queue, HCNode ptr with lower count
  * has higher priority, and if count is the same, HCNode ptr with larger symbol
